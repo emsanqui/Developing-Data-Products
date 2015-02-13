@@ -1,6 +1,8 @@
 # Predicting Race statistics for a runner in the _USA Track and Field All-time Master Runners_ list
 
-The summarized data of the _USA Track and Field All-time Master Runners (as of 2012)_ is tabulated in the __usa track and field all-time data.csv__ file.  The statistics were obtained from the USA Track and Field site at http://www.usatf.org/statistics/All-Time-Lists/Masters-Age-Graded-Road-Running.aspx. 
+Although USA Track and Field defines a Masters Runner as above 35 years old, this list contains runners at and above 40 years of age, as seen classified on road running races.  This shiny app (https://ricksanqui.shinyapps.io/USATF/) predicts race statistics for an average runner in the _USA Track and Field All-time Master Runners (as of 2012)_ list.
+
+The summarized data of the _USA Track and Field All-time Master Runners (as of 2012)_ list is tabulated in __usa track and field all-time data.csv__.  The statistics were obtained from the USA Track and Field site at http://www.usatf.org/statistics/All-Time-Lists/Masters-Age-Graded-Road-Running.aspx. 
 
 The __usa track and field.R__ file contains the scrips to create the following R files that are used by the ShinyApp.
 * __agelist.Rda__ - contains the age of competitors
