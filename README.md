@@ -1,6 +1,6 @@
 # Predicting Race statistics for a runner in the _USA Track and Field All-time Master Runners_ list
 
-The summarized data of the _USA Track and Field All-time Master Runners_ is tabulated in the __usa track and field all-time data.csv__ file.  The statistics were obtained from the USA Track and Field site at http://www.usatf.org/statistics/All-Time-Lists/Masters-Age-Graded-Road-Running.aspx. 
+The summarized data of the _USA Track and Field All-time Master Runners (as of 2012)_ is tabulated in the __usa track and field all-time data.csv__ file.  The statistics were obtained from the USA Track and Field site at http://www.usatf.org/statistics/All-Time-Lists/Masters-Age-Graded-Road-Running.aspx. 
 
 The __usa track and field.R__ file contains the scrips to create the following R files that are used by the ShinyApp.
 * __agelist.Rda__ - contains the age of competitors
