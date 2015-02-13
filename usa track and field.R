@@ -2,7 +2,7 @@ library(caret)
 
 # U.S. All-time List - Masters Age Graded Road Running (by distance)
 # As of 3/2/2012
-# http://www.usatf.org/statistics/All-Time-Lists/usa track and field all-time data.aspx
+# http://www.usatf.org/statistics/All-Time-Lists/Masters-Age-Graded-Road-Running.aspx
 
 dat <- read.csv("usa track and field all-time data.csv")
 
@@ -17,7 +17,7 @@ dat$Male[dat$Gender=="M"] <- 1
  
 # PARTITION DATA ####
 set.seed(777)
-train <- createDataPartition(dat$Seconds,list=F,p=.7)
+train <- createDataPartition(dat$Seconds,list=F,p=.9)
 training <- dat[train,]
 testing <- dat[-train,]
 
