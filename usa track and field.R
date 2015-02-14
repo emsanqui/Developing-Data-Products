@@ -1,4 +1,5 @@
 library(caret)
+library(Cubist)
 
 # U.S. All-time List - Masters Age Graded Road Running (by distance)
 # As of 3/2/2012
@@ -7,6 +8,9 @@ library(caret)
 dat <- read.csv("usa track and field all-time data.csv")
 
 summary(dat)
+
+
+# CLEAN DATA ####
 dat$Seconds <- as.numeric(dat$Seconds)
 dat$Gender <- as.factor(dat$Gender)
 dat$Male[dat$Gender=="F"] <- 0
@@ -21,10 +25,15 @@ train <- createDataPartition(dat$Seconds,list=F,p=.9)
 training <- dat[train,]
 testing <- dat[-train,]
 
+
+
+
 # SAVE DATA FILES TO BE LOADED BY SHINY APP ####
 age.list <- unique(testing[order(testing$Age),"Age"])
 save(age.list,file="agelist.Rda")
 save(dat,file="dat.Rda")
+
+
 
 
 # PLOT FUNCTION ####
@@ -56,8 +65,8 @@ fitControl <- trainControl(
     repeats = 10,
     p=.7)
 
-tuneGrid <-  expand.grid(committees=c(32:42)
-                         , neighbors=c(1:5)
+tuneGrid <-  expand.grid(committees=c(1:5)
+                         , neighbors=0
 )
 
 set.seed(77777)
@@ -72,6 +81,8 @@ summary(cubist.mod)
 
 plot.model(cubist.mod , training , training$Seconds , "Training Data...")
 plot.model(cubist.mod , testing , testing$Seconds , "Testing Data...")
+
+
 
 
 
