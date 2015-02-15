@@ -46,7 +46,7 @@ shinyServer(function(input, output) {
             geom_point(aes(y= Minute.Mile , x=as.numeric(input$Age)) , 
                        colour="black" , size=5 ) +
             geom_text(data = NULL, x = as.numeric(input$Age), y = Minute.Mile + 1 , 
-                      label = paste("predicted pace of\n",round(Minute.Mile,2)," minute/mile") ,
+                      label = paste("predicted pace of\n",round(Minute.Mile,2),"\n minute/mile") ,
                       vjust=0 , colour="black")
         
 
