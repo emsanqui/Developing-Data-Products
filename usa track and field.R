@@ -15,13 +15,13 @@ dat$Seconds <- as.numeric(dat$Seconds)
 dat$Gender <- as.factor(dat$Gender)
 dat$Male[dat$Gender=="F"] <- 0
 dat$Male[dat$Gender=="M"] <- 1
-
+save(dat,file="dat.Rda")
 
 
  
 # PARTITION DATA ####
 set.seed(777)
-train <- createDataPartition(dat$Seconds,list=F,p=.9)
+train <- createDataPartition(dat$Seconds,list=F,p=.99)
 training <- dat[train,]
 testing <- dat[-train,]
 
@@ -65,19 +65,20 @@ fitControl <- trainControl(
     repeats = 10,
     p=.7)
 
-tuneGrid <-  expand.grid(committees=c(1:5)
-                         , neighbors=0
+tuneGrid <-  expand.grid(committees=c(28:42)
+                         , neighbors=c(1:9)
 )
 
 set.seed(77777)
 cubist.mod <- train(x=training[,c("Male","Meters","Age")]
                     , y=training$Seconds
                     , method="cubist"
-                    , trControl=fitControl
+                    #, trControl=fitControl
                     , tuneGrid=tuneGrid
                     )
 # save(cubist.mod,file="./cubist_mod.Rda")
 summary(cubist.mod)
+cubist.mod$bestTune
 
 plot.model(cubist.mod , training , training$Seconds , "Training Data...")
 plot.model(cubist.mod , testing , testing$Seconds , "Testing Data...")
@@ -93,10 +94,16 @@ qplot(x=Age , y=(Seconds/60)/(Meters/1609.34) , data = dat
            , colour=Gender 
            , geom = c("point", "smooth") 
            , span = 1) + ylab("Minutes / Mile") +
-    geom_vline(xintercept = 65 , colour="green") +
-    geom_hline(yintercept = 5 , colour="green")
+    geom_vline(xintercept = 90 , colour="green") +
+    geom_hline(yintercept = (predict(cubist.mod,
+                                    data.frame(Male=0 ,
+                                               Meters=5000 ,
+                                               Age=70)
+                                    )/60) / (5000/1609.34)
+                            
+               , colour="green")
 
 
 
 
-
+predict(cubist.mod, data.frame(Male=0 ,  Meters=5000 , Age=40))/60
