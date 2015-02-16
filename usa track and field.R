@@ -21,7 +21,7 @@ save(dat,file="dat.Rda")
  
 # PARTITION DATA ####
 set.seed(777)
-train <- createDataPartition(dat$Seconds,list=F,p=.99)
+train <- createDataPartition(dat$Seconds,list=F,p=.8)
 training <- dat[train,]
 testing <- dat[-train,]
 
@@ -50,7 +50,7 @@ plot.model <- function(model, x.data, y.data, main.label){
                     "RMSE:",round(rmse),
                     "\nRsqr:",round(r.sqr,3))
     )
-    abline(1,1,col="red") 
+    abline(0,1,col="red") 
 }
 
 
@@ -65,8 +65,8 @@ fitControl <- trainControl(
     repeats = 10,
     p=.7)
 
-tuneGrid <-  expand.grid(committees=c(28:42)
-                         , neighbors=c(1:9)
+tuneGrid <-  expand.grid(committees=c(1:42)
+                         , neighbors=c(0:9)
 )
 
 set.seed(77777)
@@ -85,6 +85,16 @@ plot.model(cubist.mod , testing , testing$Seconds , "Testing Data...")
 
 
 
+male.pred <- data.frame(Age=NA,Seconds=NA,Gender=NA,Meters=NA)
+for(age in c(40:100)){
+    male.pred <- rbind(male.pred ,
+                  data.frame(Age=age ,
+                             Seconds=predict(cubist.mod, data.frame(Male=1, Meters=5000 , Age=age) ) ,
+                             Gender="M" ,
+                             Meters=5000
+                             )
+                  )
+}
 
 
 
@@ -106,4 +116,4 @@ qplot(x=Age , y=(Seconds/60)/(Meters/1609.34) , data = dat
 
 
 
-predict(cubist.mod, data.frame(Male=0 ,  Meters=5000 , Age=40))/60
+predict(cubist.mod, data.frame(Male=0 ,  Meters=5000 , Age=40))
